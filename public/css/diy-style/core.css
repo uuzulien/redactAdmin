@@ -1,0 +1,21 @@
+/*statistics.ic_transform_s*/
+.input-group-margin{margin-left: 30px;}
+/*.label1{margin-left: 70px}*/
+.label3{margin-left: 20px}
+.label2{margin-left: 20px}
+.center_div{margin: 40px auto 0 auto;width: 250px}
+.center_div button{width: 80px;margin-left: 10px}
+.contain_option_input{float: right;margin-right: 50px}
+.contain_option_input input{margin-left: 20px}
+#input-nums{width: 80px}
+.red-color{color: red}
+.float_left_ul{list-style: none;}
+.float_left_ul li{float: left;list-style: none;width: 220px;margin-right: 10px}
+.block_p{display: inline-block}
+.inline_block_style{display: inline-block}
+.inline_p{display: inline-block;margin-left: 80px}
+.m-22{margin-left: 50px}
+.cal_2{width: 45px}
+.float_left_ul li{height: 25px}
+.mark_contain_panel{padding-bottom: 10px;}
+.additional_nav{margin-top: 1px;background-color: #f5f5f5}
