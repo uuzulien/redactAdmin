@@ -29,6 +29,8 @@ class Kernel extends ConsoleKernel
 //        $schedule->command('amend_user_count')->hourly()->appendOutputTo(storage_path('logs/amend_user_count' . date('Y-m') . '.log'))
 //            ->runInBackground(); // 如果数量对不上，拉取新的(废弃)
 
+        $schedule->command('upload_imgtext_msg')->everyMinute()->appendOutputTo(storage_path('logs/upload_imgtext_msg' . date('Y-m') . '.log'))
+            ->runInBackground(); // 上传高级客服消息
         $schedule->command('send_service_msg')->everyMinute()->appendOutputTo(storage_path('logs/send_service_msg' . date('Y-m') . '.log'))
             ->runInBackground(); // 发送客服消息
         $schedule->command('update_active_fans')->everyMinute()->appendOutputTo(storage_path('logs/update_active_fans' . date('Y-m') . '.log'))

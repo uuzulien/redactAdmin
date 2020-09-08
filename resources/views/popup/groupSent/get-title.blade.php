@@ -32,33 +32,18 @@
                 <div role="tabpanel" class="tab-pane fade title-tab1 form-horizontal active in " aria-labelledby="title-tab1">
                     <div class="select-title-box">
                         <ul>
-{{--                            @forelse($res['active_title'] as $item)--}}
-{{--                                <li data-type="1" data-index="{{$item->id}}">{{$item->title}}</li>--}}
-{{--                            @empty--}}
-{{--                            没有数据--}}
-{{--                            @endforelse--}}
                         </ul>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade title-tab2 form-horizontal" aria-labelledby="title-tab2">
                     <div class="select-title-box">
                         <ul>
-{{--                            @forelse($res['novel_title'] as $item)--}}
-{{--                                <li data-type="2" data-index="{{$item->id}}">{{$item->title}}</li>--}}
-{{--                            @empty--}}
-{{--                                没有数据--}}
-{{--                            @endforelse--}}
                         </ul>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade title-tab3 form-horizontal" aria-labelledby="title-tab3">
                     <div class="select-title-box">
                         <ul>
-{{--                            @forelse($res['sign_title'] as $item)--}}
-{{--                                <li data-type="3" data-index="{{$item->id}}">{{$item->title}}</li>--}}
-{{--                            @empty--}}
-{{--                                没有数据--}}
-{{--                            @endforelse--}}
                         </ul>
                     </div>
                 </div>

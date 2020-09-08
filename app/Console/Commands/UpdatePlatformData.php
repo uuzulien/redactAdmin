@@ -22,6 +22,11 @@ class UpdatePlatformData extends Command
     protected $description = '更新小说平台的名称';
 
     /**
+     *
+     *
+     *
+     *
+     *
      * Create a new command instance.
      *
      * @return void

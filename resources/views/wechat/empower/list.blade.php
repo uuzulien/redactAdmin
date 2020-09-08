@@ -256,13 +256,13 @@
                                         <td onclick="showtr({{$key}})">{{$item->user_total}}</td>
                                         <td onclick="showtr({{$key}})">{{$item->active_user_num}}</td>
                                         <td>
+                                            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#verifyDate" data-key="{{$key}}">认证日期</button>
                                             @if(Auth::user()->rolesDetail->first()->id != 14)
-                                                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#verifyDate" data-key="{{$key}}">认证日期</button>
                                                 <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#signinModal" data-key="{{$key}}">标记</button>
                                                 <a class="btn btn-sm btn-info" href="{{route('wechat.account.switch',['id' => $item->id])}}">切入</a>
-                                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#transModal" data-key="{{$key}}">转移</button>
 {{--                                                <span class="btn btn-sm btn-danger show-audit-information" onclick="deleteAccount({{$item->id  }})" >删除 </span>--}}
                                             @endif
+                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#transModal" data-key="{{$key}}" @if(Auth::user()->userRole->is_admin < 1) disabled @endif>转移</button>
                                         </td>
                                     </tr>
 {{--                                    @if( in_array(Auth::id(), [1,54]))--}}
@@ -391,8 +391,7 @@
 
             modal.find('#name').val(data.nick_name);
             modal.find('#wid').val(data.id);
-            modal.find('#verify_date').val(data.verify_date);
-            console.log(data);
+            modal.find('.verify_date').val(data.verify_date);
             if (data.verify_date && data.status != 1){
                 modal.find('#verify_date').attr('disabled', true);
             }

@@ -71,8 +71,11 @@ class EmpowerController extends Controller
 
             foreach ($data['wxv'] as $value){
                 $query = WechatEmpowerInfo::query()->find($value);
+                $platform_nick = $query->nick_name;
                 $query->user_id = $user_id;
                 $query->save();
+                DB::connection('admin')->table('account_config')->where('platform_nick', $platform_nick)->update(['user_id' => $user_id]);
+
             }
 
         }catch (\Exception $e){

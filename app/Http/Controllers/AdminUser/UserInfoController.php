@@ -42,7 +42,7 @@ class UserInfoController extends Controller
         }
     }
 
-    public function editStaffSave(Request $request)
+    public function editStaffSave(Request $request, UserPermission $userPermission)
     {
         $id = $request->input('id');
         $groupid = $request->input('gid',0);
@@ -53,6 +53,7 @@ class UserInfoController extends Controller
         $user->role_id = $role_id;
         $user->save();
 
+        $userPermission->saveSingleUserRole($user, $role_id);
         AdminLogHandle::write('人员分配');
 
         flash_message('操作成功');

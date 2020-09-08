@@ -263,7 +263,7 @@ class AccountController extends Controller
     // 年审认证时间
     public function waitVerifyIndex()
     {
-        $check_time = Carbon::today()->addMonth();
+        $check_time = Carbon::today()->addMonths(1);
 
         $userGroup = AdminUsers::query()->group()->get()->pluck('id');
 
@@ -318,6 +318,8 @@ class AccountController extends Controller
             DB::connection('admin')->table('_log_wechat_verifydate')->where('id', $id)->update(['audit_id' => Auth::id(),'status' => $status]);
         } else {
             DB::connection('admin')->table('_log_wechat_verifydate')->updateOrInsert(['wid' => $wid, 'status' => $status], ['wid' => $wid, 'user_id' => Auth::id(), 'status' => $status, 'before_verify_date' => $verify_date]);
+
+            DB::connection('admin')->table('_log_wechat_empower_info')->where('wid', $wid)->update(['status' => 1]);
         }
 
         return success();

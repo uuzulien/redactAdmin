@@ -20,7 +20,7 @@
         <div class="col-sm-3">
             <select id="grouptype" class="form-control" name="data[filter_type]">
                 <option value="0">所有粉丝</option>
-{{--                <option value="1">条件粉丝</option>--}}
+                <option value="1">条件粉丝</option>
             </select>
         </div>
     </div>

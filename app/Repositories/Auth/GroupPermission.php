@@ -123,9 +123,9 @@ class GroupPermission
     }
 
     // 权限组分类
-    public function groupUserItem($group_id=null)
+    public function groupUserItem($group_id=null,$pdr=null)
     {
-        $users = Auth::user();
+        $users = $pdr ?? Auth::user();
         $subid = $users->sub_id;
 
         if ($subid){

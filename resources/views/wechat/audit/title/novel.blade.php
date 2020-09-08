@@ -174,18 +174,26 @@
         });
         var datas = @json($list)['data'];
 
-        // 人员分配
+        // 拒绝原因
         $('#refuse').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var recipient = button.data('key');
             var data = datas[recipient];
-            // if (data.media_id == data.media_name) {
-            //     var media_name = '';
-            // }
+            var tid;
+            var ids = [];
+            $(".fancy-checkbox input").each(function () {
+                var that = $(this);
+                that.prop('checked') ? ids.push(that.val())  : ids;
+            });
+            if (ids.length){
+                tid = ids;
+            }else {
+                tid = data.id;
+            }
             var model = $(this);
             model.find('.title').text(data.title);
             model.find('#notice').val(data.msg);
-            model.find('.tid').val(data.id);
+            model.find('.tid').val(tid);
             // model.find('#media_name').val(media_name);
         });
 
@@ -214,14 +222,14 @@
                                 icon: 1,
                                 time: 1000 , //2秒关闭（如果不配置，默认是3秒）,
                             }, function(){
-                                // location.reload();
+                                location.reload();
                             });
                         },
                         error:function(XMLHttpRequest, textStatus, errorThrown)
                         {
                             var err = eval("(" + XMLHttpRequest.responseText + ")");
                             layer.alert(err.message, function() {
-                                // location.reload();
+                                location.reload();
                             })
                         }
                     });

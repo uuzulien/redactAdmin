@@ -55,6 +55,33 @@ class HandleRequest extends Core
     {
         return $this->officialAccount->customer_service->message($text)->to($openid)->send();
     }
+    // 发送高级群发消息
+    public function sendImgtextService($mediaId, $openid,$type='NewsItem')
+    {
+        switch ($type){
+            case 'NewsItem':
+                return $this->officialAccount->broadcasting->previewNews($mediaId, $openid);
+            default:
+                break;
+        }
+    }
+
+    // 上传图片
+    public function uploadImage($path, $base='/www/wwwroot/redactAdmin/storage/app/public/')
+    {
+        return $this->officialAccount->material->uploadImage($base . $path);
+    }
+    // 上传缩略图片
+    public function uploadThumb($path)
+    {
+        return $this->officialAccount->material->uploadThumb($path);
+    }
+    // 上传图文消息
+    public function uploadArticle($article)
+    {
+        return $this->officialAccount->material->uploadArticle($article);
+    }
+
     // 获取公众号下的素材
     public function getWechatMaterialList($type = 'news')
     {

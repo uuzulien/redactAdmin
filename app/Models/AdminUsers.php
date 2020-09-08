@@ -53,12 +53,6 @@ class AdminUsers extends Authenticatable
         return $this->groupUser->name ?? '-';
     }
 
-    // 权限控制
-    public function scopeAuthManage($query, $uid = null)
-    {
-        $groups = (new GroupPermission())->getUserIdItem($uid);
-        return $query->whereIn('id', $groups);
-    }
 
     // 权限组分类
     public function scopeGroup($query, $group_id=null)

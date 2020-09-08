@@ -96,8 +96,13 @@ class WechatEmpowerInfo extends Model
         $userTree = AdminUsers::group()->select(['name','id'])->get();
 
         if ($userTree->count() > 1){
-            $wechatInfoList = self::query()->group()->select(['id','nick_name'])->get();
+            $wechatInfoList = self::query()->group($group_id)->when($pdr, function ($q) use($pdr) {
+                $q->where('user_id', $pdr);
+            })->when($pid != -1, function ($query) use($pid) {
+                $query->where('pid', $pid);
+            })->select(['id','nick_name'])->get();
         }
+
         $platforms_info = PlatformManage::query()->select(['id', 'platform_name','type'])->get();
 
         $platforms = $platforms_info->where('type', 1)->pluck('platform_name','id');
@@ -128,11 +133,6 @@ class WechatEmpowerInfo extends Model
         return $this->hasMany(WechatUserInfo::class, 'wid', 'id');
     }
 
-    public function scopeAuthManage($query, $uid = null)
-    {
-        $groups = (new GroupPermission())->getUserIdItem($uid);
-        return $query->whereIn('user_id', $groups);
-    }
 
     public function scopeGroup($query, $group_id=null)
     {

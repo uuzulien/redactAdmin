@@ -280,7 +280,7 @@
                         continue;
                     }
                     content += `<label class="control-inline fancy-checkbox-list fancy-checkbox">
-                    <input type="checkbox" name="vipall[]" class="channel" id="id[]" value="${val['id']}">
+                    <input type="checkbox" name="vipall[]" class="channel" value="${val['id']}">
                     <span>${val['nick_name']}</span>
                     </label>`;
                 }
@@ -369,7 +369,7 @@
             autoclose: true,//选中自动关闭
             todayBtn: true,//显示今日按钮
             startDate: moment().format('YYYY-MM-DD HH:mm'),
-            endDate: moment().add(3, 'day').format('YYYY-MM-DD HH:mm')
+            endDate: moment().add(3, 'day').format('YYYY-MM-DD') + ' 23:59'
         });
 
         function _postTemplateMsg() {

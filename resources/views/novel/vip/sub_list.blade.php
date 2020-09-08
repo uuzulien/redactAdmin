@@ -21,38 +21,6 @@
     {{--    <!-- 添加账号 -->--}}
     {{--    @include('popup.account.vip.add')--}}
 
-{{--    <div class="container-padding">--}}
-{{--        <div class="row">--}}
-{{--            <div class="col-md-12">--}}
-{{--                <div class="panel panel-default">--}}
-
-{{--                    <div class="panel-body">--}}
-{{--                        <form class="form-inline">--}}
-{{--                            <div class="form-group">--}}
-{{--                                <h5>运营管理	</h5>--}}
-{{--                                <select  class="form-control" name="pdr" id="pdr" style="width:200px;">--}}
-{{--                                </select>--}}
-{{--                            </div>--}}
-
-{{--                            <div class="form-group">--}}
-{{--                                <h5>公众号</h5>--}}
-{{--                                <div class="input-group">--}}
-{{--                                    <span class="add-on input-group-addon">微</span>--}}
-{{--                                    <input type="text" class="form-control" name="pf_nick" value="{{request()->get('pf_nick')}}" placeholder="请输入公众号名称">--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="form-group">--}}
-{{--                                <h5>&nbsp;</h5>--}}
-{{--                                <button type="submit" class="btn btn-default">搜索</button>--}}
-{{--                            </div>--}}
-
-{{--                        </form>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--        </div>--}}
-{{--    </div>--}}
 
     <div class="container-padding">
         <div class="row">
@@ -127,18 +95,6 @@
                 location.href= jump + page;
             }
         });
-        // 权限树
-        {{--var sel_datas = @json($groupTree);--}}
-        {{--var sel_key = '{{request()->get('pdr')}}';--}}
-        {{--var tree_content = `<option value="${sel_datas.key}" ${sel_key == sel_datas.key ? 'selected' : ''}>${sel_datas.name}</option>`;--}}
-
-        {{--for (var i in sel_datas['datas']) {--}}
-        {{--    tree_content += `<option value="${sel_datas['datas'][i].key}" ${sel_key == sel_datas['datas'][i].key ? 'selected' : ''}>┖──${sel_datas['datas'][i].name}</option>`;--}}
-        {{--    for(var k = 0; k < sel_datas['datas'][i].datas.length; k++) {--}}
-        {{--        tree_content += `<option value="${sel_datas['datas'][i].datas[k].key}" ${sel_key == sel_datas['datas'][i].datas[k].key ? 'selected' : ''}>┊╌╌┖──${sel_datas['datas'][i].datas[k].name}</option>`;--}}
-        {{--    }--}}
-        {{--}--}}
-        {{--$('#pdr').html(tree_content);--}}
 
         $(document).ready(function(){
             $('.selectpicker').selectpicker({
