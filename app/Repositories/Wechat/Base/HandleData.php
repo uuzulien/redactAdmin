@@ -25,7 +25,7 @@ trait HandleData
     }
 
     // 获取已经授权过的公众号
-    public function getIsAuthPower(int $is_power = 1)
+    public function getIsAuthPower(int $is_power=1)
     {
         return WechatEmpowerInfo::query()->select(['id','authorizer_refresh_token','auth_appid'])->where(['is_power' => $is_power])->get();
     }

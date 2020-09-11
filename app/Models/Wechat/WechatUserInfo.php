@@ -17,7 +17,7 @@ class WechatUserInfo extends Model
         $wid = Auth::user()->last_use_wechat_id ?? null;
 
         $query = self::query()->when($username, function ($q) use($username) {$q->where('nickname','like',"%$username%" );})
-            ->whereNotNull('subscribe_time')->where('wid', $wid);
+            ->whereNotNull('subscribe_time')->where('wid', $wid)->orderByDesc('subscribe_time');
 
         $list = $query->paginate(15);
 

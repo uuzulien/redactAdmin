@@ -34,13 +34,13 @@
                     <div class="form-group">
                         <label class="control-label col-xs-12 col-sm-2">账号:</label>
                         <div class="col-xs-12 col-sm-8">
-                            <input class="form-control" id="username" name="username" type="text" autocomplete="off" readonly>
+                            <input class="form-control" id="username" name="username" type="text" autocomplete="off" @if(Auth::user()->userRole->first()->is_admin < 1) readonly @endif>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-12 col-sm-2">密码:</label>
                         <div class="col-xs-12 col-sm-8">
-                            @if(Auth::user()->roles->first()->is_admin > 1)
+                            @if(Auth::user()->userRole->first()->is_admin > 1)
                                 <input type="text" class="form-control" id="passwd" name="passwd" required autocomplete="off">
                             @else
                                 <input type="password" class="form-control" id="passwd" name="passwd" required placeholder="Password" autocomplete="off">

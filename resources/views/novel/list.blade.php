@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@push('custom_css')
+    <link rel="stylesheet" type="text/css" id="theme" href="{{ asset('css/toastr/toastr.min.css') }}">
+@endpush
+
+@push('scripts')
+    <script type="text/javascript" src="{{ asset('js/plugins/toastr/toastr.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/comm.min.js') }}"></script>
+@endpush
+
 @section('breadcrumb')
     <li><a href="{{ route('home') }}">首页</a></li>
     <li>小说账户配置</li>
@@ -8,8 +17,7 @@
 @section('pageTitle')
     <div class="page-title">
         <h2>
-            <button
-                    class="btn btn-sm btn-primary refuse" data-toggle="modal" data-target="#addModal">
+            <button class="btn btn-sm btn-primary @if(!$nick_name->count()) add_error @endif" data-toggle="modal" data-target="#addModal">
                 <span class="glyphicon glyphicon-plus"></span> 新增账号
             </button>
         </h2>
@@ -148,17 +156,18 @@
             }
         });
 
-        var datas = @json($data);
+        var datas = @json($list)['data'];
+        var platforms = @json($platforms);
+        var nick_names = @json($nick_name);
+
 
         // 编辑逻辑
         $('#amendModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var recipient = button.data('key');
-            var data = datas['datas'][recipient];
+            var data = datas[recipient];
             var option_content = '';
-            var pid = datas['datas'][recipient].pid;
-            // var option_userid = '';
-            // var user_id = datas['datas'][recipient].user_id;
+            var pid = datas[recipient].pid;
 
             var modal = $(this);
             modal.find('#pfname').val(data.platform_nick);
@@ -169,14 +178,9 @@
             var option = modal.find("select[name='pt_type']");
 
             // 平台来源
-            for (var key in datas['platforms']) {
-                option_content += `<option value="${key}" ${key == pid ? 'selected' : ''}>${datas['platforms'][key]}</option>`;
+            for (var key in platforms) {
+                option_content += `<option value="${key}" ${key == pid ? 'selected' : ''}>${platforms[key]}</option>`;
             }
-            // // 账号管理者
-            // for (var key in datas['groups']) {
-            //     option_userid += `<option value="${key}" ${key == user_id ? 'selected' : ''}>${datas['groups'][key]}</option>`;
-            // }
-            // $('#user_id').html(option_userid); // 添加下拉框
 
             option.html(option_content); // 添加下拉框
         });
@@ -186,7 +190,6 @@
         var option_name = $("#pf-name");
 
         $('#addModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
             var option_content = '';
             var option_nick_content = '';
 
@@ -196,17 +199,21 @@
             modal.find('#username').val('');
             modal.find('#passwd').val('');
             modal.find('#act').attr('action',"{{route('account.add_novel')}}");
-            console.log(datas['platforms']);
             // 平台来源
-            for (var key in datas['platforms']) {
-                option_content += `<option value="${key}">${datas['platforms'][key]}</option>`;
+            for (var key in platforms) {
+                option_content += `<option value="${key}">${platforms[key]}</option>`;
             }
             // 公众号名称
-            for (var key2 in datas['nick_name']) {
-                option_nick_content += `<option value="${datas['nick_name'][key2]}">${datas['nick_name'][key2]}</option>`;
+            for (var key2 in nick_names) {
+                option_nick_content += `<option value="${nick_names[key2]}">${nick_names[key2]}</option>`;
             }
             option.html(option_content); // 添加下拉框
             option_name.html(option_nick_content); // 添加下拉框
+        });
+        $('.add_error').click(function () {
+            toastr.clear();
+            toastr.error('当前无可新增账号！');
+            return false;
         });
 
         // 删除账号

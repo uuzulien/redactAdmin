@@ -16,9 +16,9 @@ class GetUserInfo implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $timeout = 60;
+    public $timeout = 120;
 
-    public $tries = 5;
+    public $tries = 2;
 
     protected $val;
 

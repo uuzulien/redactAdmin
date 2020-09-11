@@ -26,34 +26,54 @@
                         <table class="table table-striped table-bordered">
                             <thead>
                             <tr>
-                                <th>所属公众号</th>
-                                <th>运营专员</th>
-                                <th>任务标题/备注</th>
-                                <th>类型</th>
-                                <th>用户群体</th>
-                                <th>接收人数</th>
-                                <th>发送时间</th>
-                                <th>创建时间</th>
+                                <th>创建账号</th>
+                                <th>标题</th>
+                                <th>任务类型</th>
                                 <th>任务状态</th>
+                                <th>接收人数</th>
+                                <th>预约时间</th>
+                                <th>创建时间</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($list as $key => $item)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{$item['user_name']}}</td>
                                     <td>
-{{--                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#checkModal" data-key="{{$key}}">切入</button>--}}
-{{--                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#transModal" data-key="{{$key}}">转移</button>--}}
-{{--                                        <span class="btn btn-sm btn-danger show-audit-information" onclick="deleteAccount({{$item->id  }})" >粉丝更新 </span>--}}
+                                        @foreach($item['titles'] as $k => $v)
+                                            {{$k+1}}.<span>{{$v}}</span>
+                                            <br>
+                                        @endforeach
+                                    </td>
+                                    <td>{{[0 => '文本消息', 1 => '图文消息'][$item['msgtype']]}}</td>
+                                    <td>
+                                        @switch($item['status'])
+                                            @case(-1)
+                                                <span class="label label-primary">等待初始化</span>
+                                                @break
+                                            @case(0)
+                                                <span class="label label-info">未发送</span>
+                                                @break
+                                            @case(1)
+                                            <span class="label label-warning">发送中</span>
+                                                @break
+                                            @case(2)
+                                            <span class="label label-success">发送成功</span>
+                                                @break
+                                            @case(3)
+                                                <span class="label label-danger">发送失败</span>
+                                                @break
+                                            @default
+                                                <span class="label label-info">未知</span>
+                                        @endswitch
+
+                                    </td>
+                                    <td>{{$item['send_num']}}</td>
+                                    <td>{{$item['send_time']}}</td>
+                                    <td>{{$item['created_at']}}</td>
+                                    <td>
+                                        <span class="btn btn-sm btn-danger show-audit-information" onclick="deleteAccount({{$item['id']}})" >删除 </span>
                                     </td>
                                 </tr>
                             @empty
@@ -62,8 +82,14 @@
                             </tbody>
                         </table>
                     </div>
+{{--                    <div class="col-xs-12 col-md-10 col-sm-10">--}}
+{{--                            <span data-toggle="tooltip" data-placement="bottom" title="输入页码，按回车快速跳转" >--}}
+{{--                                第 <input type="text" class="text-center form-control" style="width: 50px;display: inline-block" data-jump="{{$list->url(1)}}" value="{{ $list->currentPage() }}" id="customPage" data-total-page="{{ $list->lastPage() }}" > 页 / 本页 {{$list->count()}} 条数据--}}
+{{--                            </span>--}}
+{{--                        <span>共{{$list->total()}}条数据 </span>--}}
+{{--                    </div>--}}
+{{--                    <div class="page">{{$list->appends($app->request->all())->links()}}</div>--}}
                 </div>
-{{--                <div class="page">{{$list->appends($app->request->all())->links()}}</div>--}}
             </div>
 
         </div>

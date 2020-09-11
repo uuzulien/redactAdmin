@@ -44,6 +44,7 @@ class TestSend extends Command
      */
     public function handle()
     {
+        dd(Carbon::today()->addDays(3));
         $data = DB::table('wechat_empower_info as a')->leftJoin('admin_users as b', function ($join){
             $join->on('a.user_id','=','b.id');
         })->where('a.sex', 0)->whereIn('b.gid', [1,2])->select('a.id')->get();

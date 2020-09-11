@@ -1,4 +1,8 @@
 @extends('layouts.app')
+@push('scripts')
+    <script type="text/javascript" src="{{ asset('layer/layer.js') }}"></script>
+@endpush
+
 <meta name="referrer" content="never">
 <style>
     .user-img{
@@ -49,11 +53,25 @@
                                     <span class="add-on input-group-addon">@</span>
                                     <select id="select-id" class="form-control" autocomplete="off" name="status">
                                         <option value="all" >所有状态</option>
-                                        <option value="0" @if(request()->get('status')=='1') selected @endif>未审核</option>
-                                        <option value="1" @if(request()->get('status')=='2') selected @endif>通过</option>
+                                        <option value="0" @if(request()->get('status')=='0') selected @endif>未审核</option>
+                                        <option value="1" @if(request()->get('status')=='1') selected @endif>通过</option>
                                     </select>
                                 </div>
                             </div>
+                            @if(request()->input('act', 2) == 2)
+                                <div class="form-group">
+                                    <h5>共用素材</h5>
+                                    <div class="input-group">
+                                        <span class="add-on input-group-addon">@</span>
+                                        <select id="select-id" class="form-control" autocomplete="off" name="is_share">
+                                            <option value="all" >所有状态</option>
+                                            <option value="0" @if(request()->get('is_share')=='0') selected @endif>未审核</option>
+                                            <option value="1" @if(request()->get('is_share')=='1') selected @endif>通过</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
+
                             <div class="form-group">
                                 <h5>公众号</h5>
                                 <div class="input-group">
@@ -98,6 +116,9 @@
                                     <th>审核结果</th>
                                     <th>申请时间</th>
                                     <th>审核时间</th>
+                                    @if(request()->input('act', 2) == 2)
+                                    <th>操作</th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -124,6 +145,16 @@
                                         </td>
                                         <td>{{$item->created_at}}</td>
                                         <td>{{$item->audit_time ?? '-'}}</td>
+                                        @if(request()->input('act', 2) == 2)
+                                            @if(Auth::user()->userRole->grade > 0 && $item->status == 1 && $item->is_share == -1)
+                                                <td>
+
+                                                    <a data-id="{{$item->id}}" href="javascript:void(0);" type="button" class="btn btn-sm btn-warning use-common-share">选为共用</a>
+                                                </td>
+                                            @else
+                                                <td></td>
+                                            @endif
+                                        @endif
                                     </tr>
                                 @empty
                                     没有数据
@@ -160,6 +191,43 @@
                 location.href= jump + page;
             }
         });
+        $('.use-common-share').click(function () {
+            var id = $(this).data('id');
+
+            layer.confirm('是否更改为通用素材？', {
+                offset:'200px',
+                btn: ['是','否']
+            }, function(){
+                this.disabled = true;
+                $.ajax({
+                    url: "{{route('wechat.title.update')}}",
+                    type: 'post',
+                    data:{id:id, is_share: 0},
+                    success:function()
+                    {
+                        layer.msg('操作成功', {
+                            offset:'200px',
+                            icon: 1,
+                            time: 1000 , //2秒关闭（如果不配置，默认是3秒）,
+                        }, function(){
+                            location.reload();
+                        });
+                    },
+                    error:function(XMLHttpRequest, textStatus, errorThrown)
+                    {
+                        var err = eval("(" + XMLHttpRequest.responseText + ")");
+                        layer.alert(err.message, function() {
+                            location.reload();
+                        })
+                    }
+                });
+                return false;
+            }, function(){
+
+            });
+            return false;
+        });
+        
     </script>
 
 @endsection

@@ -30,7 +30,7 @@ class StoreDataController extends Controller
         }
 
         if ($error)
-            return response()->json(['message' => 'error', 'data' => $datas[0], 'case' => $e,'wid' => $wid]);
+            return response()->json(['message' => 'error', 'data' => $datas[0], 'case' => $e]);
         return success();
 
     }
@@ -69,6 +69,14 @@ class StoreDataController extends Controller
                         unset($item['yw_id']);
                         DB::connection('public')->table('pay_income')->updateOrInsert(['order_time' => $item['order_time'], 'wid' => $first->id], $item);
                     }
+                }
+                break;
+            case 'insert_novel':
+                $datas = $datas[0];
+                $chapter = DB::connection('public')->table('novel_library_content')->where(['novel_id' => 1, 'num' => $datas['num']])->first();
+                $content = $chapter->content ?? null;
+                if (!$content){
+                    DB::connection('public')->table('novel_library_content')->insert(['num' => $datas['num'], 'title' => $datas['title'],'content' => $datas['content'], 'novel_id' => 1]);
                 }
                 break;
             default:

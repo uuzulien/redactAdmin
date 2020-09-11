@@ -26,7 +26,11 @@
                                         <div class="form-group">
                                             <label class="control-label col-xs-12 col-sm-3">认证日期:</label>
                                             <div class="col-xs-12 col-sm-8">
-                                                <input type="text" class="form-control datetimepicker" id="verify_date" name="verify_date" placeholder="开始日期" value="" autocomplete="off">
+                                                @if(Auth::id() == 54)
+                                                    <input type="text" class="form-control verify_date datetimepicker" id="verify_date_kf" name="verify_date" placeholder="开始日期" value="" autocomplete="off">
+                                                @else
+                                                    <input type="text" class="form-control verify_date datetimepicker" id="verify_date" name="verify_date" placeholder="开始日期" value="" autocomplete="off">
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

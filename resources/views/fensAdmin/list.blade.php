@@ -58,7 +58,7 @@
                                         <div class="label label-warning">{{['1' => '已关注', '0' => '未关注'][$item->subscribe]}}</div>
                                     </td>
                                     <td>{{$item->id}}</td>
-                                    <td>{{date('Y-m-s h:i:s', $item->subscribe_time)}}</td>
+                                    <td>{{date('Y-m-d H:i:s', $item->subscribe_time)}}</td>
                                     <td>{{$item->country . $item->province . $item->city}}</td>
                                     <td></td>
                                     <td>{{['1' => '男', '2' => '女', '0' => '未知'][$item->sex] ?? '未知'}}</td>

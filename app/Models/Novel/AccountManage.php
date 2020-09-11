@@ -40,6 +40,7 @@ class AccountManage extends Model
         $pfname = $data['pf_nick'] ?? null;
         $group_id = $data['group'] ?? null;
 
+        $userGroup = AdminUsers::query()->group($group_id)->get()->pluck('id');
 
         list($groups, $user_all) = AdminUsers::getGroupInfo();
 
@@ -53,25 +54,13 @@ class AccountManage extends Model
             $q->where('pid', $pid);
         })->orderByDesc('status')->orderBy('created_at')->paginate(15);
 
-        $data = [
-            'datas' => $list->map(function ($q) {
-                $item['id'] = $q->id;
-                $item['user_id'] = $q->user_id;
-                $item['platform_nick'] = $q->platform_nick;
-                $item['pid'] = $q->pid;
-                $item['account'] = $q->account;
-                $item['password'] = $q->password;
-                return $item;
-            }),
-            'platforms' => PlatformManage::query()->where('type', 1)->get(['id','platform_name'])->pluck('platform_name','id'),
-            'nick_name' => DB::connection('admin')->table('wechat_empower_info as a')->leftJoin('account_config as b', function ($join){
-                $join->on('a.nick_name','=','b.platform_nick');
-            })->whereNull('b.platform_nick')->select(['a.nick_name','a.id'])->get()->pluck('nick_name','id'),
-            'groups' => AdminUsers::AuthManage()->get()->pluck('name', 'id'),
-        ];
         $platforms = PlatformManage::query()->where('type', 1)->get(['id', 'platform_name'])->pluck('platform_name', 'id');
 
-        return compact('list', 'data', 'platforms', 'groups', 'user_all');
+        $nick_name = DB::connection('admin')->table('wechat_empower_info as a')->leftJoin('account_config as b', function ($join){
+            $join->on('a.nick_name','=','b.platform_nick');
+        })->whereIn('a.user_id', $userGroup)->whereNull('b.platform_nick')->select(['a.nick_name','a.id'])->get()->pluck('nick_name','id')->filter();
+
+        return compact('list', 'platforms', 'groups', 'user_all', 'nick_name');
     }
 
     public function scopeAuthManage($query, $uid = null)

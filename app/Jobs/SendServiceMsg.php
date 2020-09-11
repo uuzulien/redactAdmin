@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -20,7 +19,7 @@ class SendServiceMsg implements ShouldQueue
 
     public $timeout = 120;
 
-    public $tries = 5;
+    public $tries = 2;
 
     /**
      * Create a new job instance.

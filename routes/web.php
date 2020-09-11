@@ -177,7 +177,7 @@ Route::group(['prefix' => 'fens', 'namespace' => 'Wechat'], function () {
 
 });
 // 素材中心
-Route::group(['prefix' => 'material', 'namespace' => 'Wechat\Material'], function () {
+Route::group(['prefix' => 'material', 'namespace' => 'Material'], function () {
     // 微信公共素材列表
     Route::get('list', 'BatchgetMaterialController@index')->name('wechat.material.list');
     Route::post('media/add_name', 'BatchgetMaterialController@addMediaName')->name('wechat.material.add_name');
@@ -208,7 +208,23 @@ Route::group(['prefix' => 'material', 'namespace' => 'Wechat\Material'], functio
 
         // 读取当前可录入的小说类型
         Route::get('novel/get_type', 'EnterMaterialController@lazyNovelType')->name('wechat.lazy.novel_type');
+
+
+        // 图文消息
+        Route::get('img_text/list', 'EnterMaterialController@imageTextIndex')->name('wechat.imgtext.list');
+        // 封面图片素材
+        Route::get('img/list', 'EnterMaterialController@imageIndex')->name('wechat.img.list');
+        // 新建单图文消息
+        Route::get('img_text/add', 'EnterMaterialController@imageTextAdd')->middleware(CheckUseWechatId::class)->name('wechat.imgtext.add');
+        Route::get('img_text/edit/{id}', 'EnterMaterialController@imageTextEdit')->name('wechat.imgtext.edit');
+        Route::post('img_text/save', 'EnterMaterialController@imageTextSave')->name('wechat.imgtext.save');
     });
+    // 删除
+    Route::group(['prefix' => 'delete'], function () {
+        // 图库
+        Route::delete('img/list/{id}', 'EnterMaterialController@imageDelete')->name('wechat.del.image');
+    });
+
     // 录入链接
     Route::group(['prefix' => 'link', 'middleware' => CheckUseWechatId::class],function (){
         // 活动
@@ -229,6 +245,8 @@ Route::group(['prefix' => 'material', 'namespace' => 'Wechat\Material'], functio
         Route::get('title/signin', 'AuditController@titleSignIndex')->name('title.audit.signin');
         // 继续阅读
         Route::get('title/history', 'AuditController@titleHistoryIndex')->name('title.audit.history');
+        // 共用小说标题
+        Route::get('title/common/novel', 'AuditController@titleComNovelIndex')->name('title.audit.com.novel');
 
         // 小说
         Route::get('link/novel', 'AuditController@linkNovelIndex')->name('wechat.audit.novel');

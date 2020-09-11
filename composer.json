@@ -16,7 +16,8 @@
         "guzzlehttp/guzzle": "~6.0",
         "overtrue/laravel-wechat": "~4.0",
         "overtrue/wechat": "~4.1",
-        "maatwebsite/excel": "^2.1"
+        "maatwebsite/excel": "^2.1",
+        "stevenyangecho/laravel-u-editor": "~1.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",

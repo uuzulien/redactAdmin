@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::group(['prefix' => 'sub','namespace' => 'Account'], function () {
+Route::group(['prefix' => 'sub'], function () {
     // 获取平台对应的子账户
     Route::get('account', 'NovelApiController@getSubAccount');
 });
+// 获取可同步的账号
+Route::get('getChannel/datas/{Arr}', 'NovelApiController@checkSyncAccount');

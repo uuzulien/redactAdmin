@@ -12,6 +12,7 @@ class FensAdminController extends Controller
 {
     public function index(Request $request,WechatUserInfo $wechatUserInfo)
     {
+        date_default_timezone_set("Asia/Shanghai");
         $param = $request->all();
 
         $data = $wechatUserInfo->getFensList($param);

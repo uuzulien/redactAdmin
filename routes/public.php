@@ -22,3 +22,5 @@ Route::group([ 'namespace' => 'AdminUser','middleware'=>'authWeb'], function () 
 
 // 下载表格数据
 Route::get('/server_message/export', 'Analyze\ExportController@serverMessage')->name('notice.server.export');
+// 微信素材上传
+Route::any('wechat/uploads', 'Material\EnterMaterialController@uploadFile')->name('wechat.upload.image');
