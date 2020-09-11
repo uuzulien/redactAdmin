@@ -48,15 +48,16 @@ class WechatSendBase extends HandleRequest
 
         return $result;
     }
-    // 发送高级群发消息
-    public function imgtextService($list, $user_id, $type='text')
+
+    // 发送高级群发测试
+    public function imgtextServiceTest($list, $user_id, $type)
     {
-        $users = is_object($user_id) ? $user_id : $this->getUserAndWechatInfo($user_id);
-        if (!$users)
+        $wechat = $this->getUserAndWechatInfo($user_id);
+        if (!$wechat)
             return ['errcode' => 40001, 'errmsg' => '已取消关注'];
 
-        $this->appid = $users->auth_appid;
-        $this->token = $users->authorizer_refresh_token;
+        $this->appid = $wechat->auth_appid;
+        $this->token = $wechat->authorizer_refresh_token;
 
         $queryImgtextInfo = DB::connection('admin')->table('wechat_imgtext_info')->get();
 
@@ -69,11 +70,11 @@ class WechatSendBase extends HandleRequest
         $ArrData = [];
 
         if ($media_id){
-            $result = $this->make()->sendImgtextService($media_id, $users->openid);
+            $result = $this->make()->sendImgtextService($media_id, $wechat->openid, $type);
             return $result;
         }
 
-        if ($type == 'NewsItem'){
+        if ($type == 'previewNew'){
             foreach ($template as $k => $v){
                 $file = $queryImgInfo->where('wid', $wid)->firstWhere('img_href', $v->src);
                 $query = $queryImgInfo->firstWhere('img_href', $v->src);
@@ -88,7 +89,7 @@ class WechatSendBase extends HandleRequest
                 }
                 $data['thumb_media_id'] = $media_id;
                 $data['author'] = '';
-                $data['title'] = str_replace("{wx_name}", $users->nickname, $v->title);
+                $data['title'] = str_replace("{wx_name}", $wechat->nickname, $v->title);
                 $data['content_source_url'] = $v->href;
                 $data['content'] = $queryImgtextInfo->firstWhere('title', $v->title)->content;
                 $data['digest'] = '';
@@ -104,7 +105,21 @@ class WechatSendBase extends HandleRequest
             $text = $result['media_id'];
         }
 
-        $result = $this->make()->sendImgtextService($text, $users->openid);
+        $result = $this->make()->sendImgtextService($text, $wechat->openid, $type);
+
+        return $result;
+    }
+
+
+    // 发送高级群发内容
+    public function imgtextService(string $media_id, $wid,string $type)
+    {
+        $wechat = DB::table('wechat_empower_info')->find($wid);
+
+        $this->appid = $wechat->auth_appid;
+        $this->token = $wechat->authorizer_refresh_token;
+
+        $result = $this->make()->sendImgtextService($media_id, $type);
 
         return $result;
     }

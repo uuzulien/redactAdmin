@@ -51,6 +51,7 @@ class UploadImgtext extends Command
 
     }
 
+
     // 图文消息保存
     public function imgTextSave($data)
     {
@@ -61,7 +62,6 @@ class UploadImgtext extends Command
         }
         DB::table('imgtext_message_info')->where('id', $data->id)->update(['status' => 0, 'media_id' => $media_id]);
     }
-
     //    图文消息测试发送
     public function imgTextSendTest($data)
     {
@@ -70,7 +70,7 @@ class UploadImgtext extends Command
         $send_type['media_id'] = $data->media_id;
 
         if (array_key_exists('sub_item', $send_type)){
-            $media_id = (new WechatSendBase())->imgtextService($send_type, 479966, 'NewsItem');
+            $media_id = (new WechatSendBase())->imgtextServiceTest($send_type, 479966, 'previewNew');
         }
     }
 }

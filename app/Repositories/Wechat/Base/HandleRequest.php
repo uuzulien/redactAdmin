@@ -59,11 +59,19 @@ class HandleRequest extends Core
     public function sendImgtextService($mediaId, $openid,$type='NewsItem')
     {
         switch ($type){
-            case 'NewsItem':
+            case 'previewNew':
                 return $this->officialAccount->broadcasting->previewNews($mediaId, $openid);
+            case 'sendNews':
+                return $this->officialAccount->broadcasting->sendNews($mediaId);
             default:
                 break;
         }
+    }
+
+    // 查询msgid发送状态
+    public function getMsgidStatus($msgId)
+    {
+        return $this->officialAccount->broadcasting->status($msgId);
     }
 
     // 上传图片

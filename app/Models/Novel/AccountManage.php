@@ -58,7 +58,7 @@ class AccountManage extends Model
 
         $nick_name = DB::connection('admin')->table('wechat_empower_info as a')->leftJoin('account_config as b', function ($join){
             $join->on('a.nick_name','=','b.platform_nick');
-        })->whereIn('A.user_id', $userGroup)->whereNull('b.platform_nick')->select(['a.nick_name','a.id'])->get()->pluck('nick_name','id')->filter();
+        })->whereIn('a.user_id', $userGroup)->whereNull('b.platform_nick')->select(['a.nick_name','a.id'])->get()->pluck('nick_name','id')->filter();
 
         return compact('list', 'platforms', 'groups', 'user_all', 'nick_name');
     }

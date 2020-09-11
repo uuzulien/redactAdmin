@@ -16,7 +16,7 @@
 
 @section('breadcrumb')
     <li><a class="fa fa-home" href="{{ route('home') }}"> 首页</a></li>
-    <li>添加客服消息任务</li>
+    <li>添加高级群发消息任务</li>
 @endsection
 <style>
     .multi .appmsg_item:after {

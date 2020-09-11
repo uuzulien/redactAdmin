@@ -291,7 +291,7 @@ class GroupSentController extends Controller
         $send_type['wid'] = $param['wid'];
 
         if (array_key_exists('sub_item', $send_type)){
-            $content = (new WechatSendBase())->imgtextService($send_type, $data['test_user'], 'NewsItem');
+            $content = (new WechatSendBase())->imgtextServiceTest($send_type, $data['test_user'], 'previewNew');
         }
 
         return response()->json($content);
